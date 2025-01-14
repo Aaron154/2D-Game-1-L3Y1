@@ -21,6 +21,7 @@ public class Health : MonoBehaviour
         currentHealth -= damage;
 
         Debug.Log(this + " Took " + damage + " Damage");
+        Debug.LogWarning(this + " Is Low On Health - " + currentHealth + " Out Of " + maxHealth);
 
         if (currentHealth <= 0)
         {
