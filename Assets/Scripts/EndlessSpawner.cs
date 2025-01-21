@@ -6,9 +6,9 @@ public class EndlessSpawner : MonoBehaviour
     public GameObject objectToSpawn;
     public Transform spawnPoint;
 
-    float spawnInterval = 3f;
-    float minimumSpawnInterval = 0.5f;
-    float intervalDecrease = 0.05f;
+    float spawnInterval = 5f;
+    float minimumSpawnInterval = 1f;
+    float intervalDecrease = 0.02f;
 
     // Update is called once per frame
     private void Start()
@@ -33,5 +33,6 @@ public class EndlessSpawner : MonoBehaviour
 
             spawnInterval = Mathf.Max(minimumSpawnInterval, spawnInterval - intervalDecrease);
         }
+      
     }
 }
