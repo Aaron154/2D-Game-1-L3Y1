@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    float maxHealth;
+    public float playerMaxHealth;
     float currentHealth;
 
     public HUDManager HUD;
@@ -12,15 +12,15 @@ public class PlayerHealth : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        currentHealth = maxHealth;
-        HUD.UpdateHealthBar(currentHealth/maxHealth);
+        currentHealth = playerMaxHealth;
+        HUD.UpdateHealthBar(currentHealth/playerMaxHealth);
     }
 
     // Update is called once per frame
     public void TakeDamage(float damageAmount)
     {
         currentHealth -= damageAmount;
-        HUD.UpdateHealthBar(currentHealth/maxHealth);
+        HUD.UpdateHealthBar(currentHealth/playerMaxHealth);
         if (currentHealth <= 0)
             Die();
     }
