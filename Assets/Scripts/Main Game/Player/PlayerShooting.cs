@@ -2,14 +2,11 @@ using UnityEngine;
 
 public class PlayerShooting : MonoBehaviour
 {
-    public GameObject bulletPrefab;
-    
-    public Transform firePointRotation;
-    
-    public Transform bulletSpawnPoint;
-
-    public float bulletSpeed = 20f;
-    float attackRate = 2f;
+    [SerializedField] public GameObject bulletPrefab;
+    [SerializedField] public Transform firePointRotation;
+    [SerializedField] public Transform bulletSpawnPoint;
+    [SerializedField] public float bulletSpeed = 20f;
+    [SerializedField] float attackRate = 2f;
 
     AudioSource audioSource;
     public AudioClip attacksound;
@@ -22,9 +19,6 @@ public class PlayerShooting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (UIManager.isPaused)
-        return;
-
         RotateBulletSpawnPointTowardsMouse();
         if(Input.GetButtonDown("Fire1"))
         {
@@ -45,14 +39,9 @@ public class PlayerShooting : MonoBehaviour
     }
     void Shoot()
     {
-        lastTimeShot = Time.time;
-
-
         GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, firePointRotation.rotation);
-        bullet.transform.rotation = Quaternion.Euler(0, 0, firePointRotation.rotation);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.velocity = firePointRotation.right * bulletSpeed;
-        audioSource.PlayOneShot(attackSound);
         Destroy(bullet, 10f);
 
     }
