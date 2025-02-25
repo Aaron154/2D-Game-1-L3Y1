@@ -2,14 +2,14 @@ using UnityEngine;
 
 public class PlayerShooting : MonoBehaviour
 {
-    [SerializedField] public GameObject bulletPrefab;
-    [SerializedField] public Transform firePointRotation;
-    [SerializedField] public Transform bulletSpawnPoint;
-    [SerializedField] public float bulletSpeed = 20f;
-    [SerializedField] float attackRate = 2f;
+    public GameObject bulletPrefab;
+    public Transform firePointRotation;
+    public Transform bulletSpawnPoint;
+    public float bulletSpeed = 20f;
+    float attackRate = 2f;
 
     AudioSource audioSource;
-    public AudioClip attacksound;
+    public AudioClip attackSound;
 
     private void Start()
     {
@@ -42,7 +42,7 @@ public class PlayerShooting : MonoBehaviour
         GameObject bullet = Instantiate(bulletPrefab, bulletSpawnPoint.position, firePointRotation.rotation);
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.velocity = firePointRotation.right * bulletSpeed;
+        audioSource.PlayOneShot(attackSound);
         Destroy(bullet, 10f);
-
     }
 }
