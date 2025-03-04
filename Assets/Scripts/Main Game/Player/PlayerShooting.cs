@@ -20,7 +20,7 @@ public class PlayerShooting : MonoBehaviour
     void Update()
     {
         RotateBulletSpawnPointTowardsMouse();
-        if(Input.GetButtonDown("Fire1"))
+        if(Input.GetButtonDown("Fire2"))
         {
             Shoot();
         }
