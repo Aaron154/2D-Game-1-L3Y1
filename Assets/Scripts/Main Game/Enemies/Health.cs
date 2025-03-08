@@ -4,11 +4,6 @@ public class Health : MonoBehaviour
 {
     public int maxHealth;
     int currentHealth;
-
-    private void once()
-    {
-        Debug.Log(this + "Is In The Game");
-    }
     
     // Start is called before the first frame update
     private void Start()

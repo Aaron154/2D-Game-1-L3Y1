@@ -6,7 +6,6 @@ public class PlayerShooting : MonoBehaviour
     public Transform firePointRotation;
     public Transform bulletSpawnPoint;
     public float bulletSpeed = 20f;
-    float attackRate = 2f;
 
     AudioSource audioSource;
     public AudioClip attackSound;
