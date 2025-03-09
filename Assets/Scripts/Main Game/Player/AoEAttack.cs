@@ -6,11 +6,11 @@ public class AoEAttack : MonoBehaviour
     // Notes Are Put Above The Code Line/Script Sector
 
     // Size Of Attack
-    public float attackRange = 1.5f;
+    public float attackRange = 3f;
     // Damage Of Attack
     public int damage = 10;
     // Cooldown Of Attack
-    public float cooldown = 0.6f;
+    public float cooldown = 0.5f;
     // Make The Attack Visual Actually Visable
     public GameObject attackVisual;
 
@@ -39,15 +39,38 @@ public class AoEAttack : MonoBehaviour
         // Complex Code To Detect Enemies
         Collider2D[] enemies = Physics2D.OverlapCircleAll(transform.position, attackRange);
 
+        // HEAVY DEBUGGING
+        if (enemies.Length == 0)
+        {
+            Debug.LogError("❌ No enemies were detected in the attack radius.");
+            return;
+        }
+
         foreach (Collider2D enemy in enemies)
         {
+            // HEAVY DEBUGGING
+            Debug.Log("✅ Detected: " + enemy.gameObject.name);
+            //Debug To Make Sure That The Attack hits The Enemy
+            Debug.Log("Hit Detected: " + enemy.gameObject.name);
+            // Prevent The Attack From Hitting The Player
+            if (enemy.gameObject == gameObject || enemy.CompareTag("Player"))
+            {
+                // HEAVY DEBUGGING
+                Debug.LogWarning("⚠️ Skipped hitting the player.");
+                continue;
+            }
             if (enemy.CompareTag("Enemy"))
             {
+                // HEAVY DEBUGGING
+                Debug.Log("💥 Hit Detected On: " + enemy.gameObject.name);
+                // Grabs The Health And The Rigidbody Of The Enemy
                 Health health = enemy.GetComponent<Health>();
                 Rigidbody2D rb = enemy.GetComponent<Rigidbody2D>();
 
                 if (health != null)
                 {
+                    // HEAVY DEBUGGING
+                    Debug.Log("🩸 Damage Dealt To: " + enemy.gameObject.name);
                     // This Deals The Damage
                     health.TakeDamage(damage);
 
@@ -56,25 +79,41 @@ public class AoEAttack : MonoBehaviour
                     {
                         Vector2 direction = (enemy.transform.position - transform.position).normalized;
                         // This Is The Knockback Force
-                        rb.AddForce(direction * 500f);
+                        rb.AddForce(direction * 3000f, ForceMode2D.Impulse);
+                        // HEAVY DEBUGGING
+                        Debug.Log("💨 Knockback Applied To: " + enemy.gameObject.name);
                     }
 
                     if (!isSlowMoActive)
                     {
+                        // HEAVY DEBUGGING
+                        Debug.Log("🕐 Slow-Mo Triggered.");
                         StartCoroutine(SlowMoEffect());
                     }
                     
                 }
-                
+                // HEAVY DEBUGGING
+                else
+                {
+                    Debug.LogWarning("⚠️ No Health Script Found On: " + enemy.gameObject.name);
+                }
+
+            }
+            // HEAVY DEBUGGING
+            else
+            {
+                Debug.LogWarning("⚠️ This object has NO 'Enemy' tag: " + enemy.gameObject.name);
             }
         }
     }
     // This Should Be Self Explanatory By The Name
     IEnumerator AttackCooldown()
     {
+        Debug.Log("Attack CD Started");
         canAttack = false;
         yield return new WaitForSeconds(cooldown);
         canAttack = true;
+        Debug.Log("Attack CD Ended");
     }
 
     IEnumerator HideAttackVisual()
@@ -96,6 +135,7 @@ public class AoEAttack : MonoBehaviour
         yield return new WaitForSecondsRealtime(0.2f);
         // Return To Normal Speed
         Time.timeScale = 1f;
+        Time.fixedDeltaTime = 0.02f;
         isSlowMoActive = false;
     }
 
