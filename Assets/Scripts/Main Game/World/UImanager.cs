@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UImanager : MonoBehaviour
 {
@@ -35,5 +36,11 @@ public class UImanager : MonoBehaviour
     {
         Debug.Log("Quitting The Game");
         Application.Quit();     // Only works in games. Not the editor
+    }
+
+    public void GoToMainMenu()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("Main Menu");
     }
 }
