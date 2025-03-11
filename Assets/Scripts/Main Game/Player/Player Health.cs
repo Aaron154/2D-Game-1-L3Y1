@@ -8,6 +8,7 @@ public class PlayerHealth : MonoBehaviour
     float currentHealth;
 
     public HUDManager HUD;
+    public YouLose YouLose;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +28,7 @@ public class PlayerHealth : MonoBehaviour
 
     public void Die()
     {
+        YouLose.GameOver();
         Destroy(gameObject);
     }
 }
